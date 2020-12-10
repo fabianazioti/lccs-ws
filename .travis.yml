@@ -26,7 +26,7 @@ before_install:
 install:
     - pip install -e .[tests,docs]
     - docker pull postgis/postgis:12-3.0
-    - docker run --name bdc_lccs -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=postgres -d postgis/postgis:12-3.0
+    - docker run --name bdc_pg -p 127.0.0.1:5432:5432 -e POSTGRES_PASSWORD=postgres -d postgis/postgis:12-3.0
     - docker ps -a
     - lccs_db db init
     - lccs_db db create-namespaces
@@ -37,6 +37,6 @@ script:
     - ./run-tests.sh
 
 after_success:
-    - docker stop bdc_lccs
-    - docker rm bdc_lccs
+    - docker stop bdc_pg
+    - docker rm bdc_pg
     - coveralls
