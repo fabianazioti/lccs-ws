@@ -20,7 +20,7 @@ services:
     image: lccs-ws:0.4.0-0
     restart: "always"
     environment:
-      - "SQLALCHEMY_URI=postgresql://user:password@localhost:5432/dbname"
+      - "SQLALCHEMY_DATABASE_URI=postgresql://user:password@localhost:5432/dbname"
       - "LCCS_URL=http://localhost:8080"
     networks:
       - bdc_net
