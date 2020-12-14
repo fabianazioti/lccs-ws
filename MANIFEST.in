@@ -33,4 +33,5 @@ recursive-include docs *.xml
 recursive-include docs Makefile
 recursive-include docs *.ico
 recursive-include docs *.png
+recursive-include tests *.json
 recursive-exclude docker *
