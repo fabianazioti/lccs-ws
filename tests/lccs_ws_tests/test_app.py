@@ -56,14 +56,12 @@ class TestLCCSWS:
         assert response.content_type == 'application/json'
         validate(instance=response.json, schema=root_response)
 
-    # def test_classification_systems(self, client):
-    #     response = client.get('/classification_systems')
-    #
-    #     data = json_loads(response.data.decode('utf-8'))
-    #
-    #     validate(instance=data, schema=classification_system_response)
-    #
-    #     assert response.status_code == 200
+    def test_classification_systems(self, client):
+        response = client.get('/classification_systems')
+
+        validate(instance=response.json, schema=classification_system_response)
+
+        assert response.status_code == 200
     #
     # def test_classification_system(self, client):
     #     response = client.get('/classification_system/PRODES')

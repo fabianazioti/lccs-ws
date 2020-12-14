@@ -14,10 +14,6 @@ dist: bionic
 python:
     - "3.7"
 
-env:
-  - SQLALCHEMY_DATABASE_URI="postgresql://postgres:postgres@127.0.0.1:5432/bdc_lccs"
-
-
 before_install:
     - pip install --upgrade pip
     - pip install --upgrade setuptools
@@ -27,8 +23,11 @@ install:
     - docker pull postgis/postgis:12-3.0
 
 before_script:
-    - docker run --name bdc_pg --net=host -p 127.0.0.1:5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgis/postgis:12-3.0
+    - docker run --name bdc_pg --net=host -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgis/postgis:12-3.0
     - docker ps -a
+    - SQLALCHEMY_DATABASE_URI="postgresql://postgres:postgres@localhost:5432/bdc_lccs" lccs_db db init
+    - SQLALCHEMY_DATABASE_URI="postgresql://postgres:postgres@localhost:5432/bdc_lccs" lccs_db db create-namespaces
+    - SQLALCHEMY_DATABASE_URI="postgresql://postgres:postgres@localhost:5432/bdc_lccs" lccs_db db load-scripts
 
 script:
     - ./run-tests.sh
