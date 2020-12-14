@@ -15,8 +15,7 @@ python:
     - "3.7"
 
 env:
-  matrix:
-  - SQLALCHEMY_DATABASE_URI="postgresql://postgres:postgres@localhost:5432/bdc_lccs"
+  - SQLALCHEMY_DATABASE_URI="postgresql://postgres:postgres@127.0.0.1:5432/bdc_lccs"
 
 
 before_install:
@@ -28,7 +27,7 @@ install:
     - docker pull postgis/postgis:12-3.0
 
 before_script:
-    - docker run --name bdc_pg -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgis/postgis:12-3.0
+    - docker run --name bdc_pg --net=host -p 127.0.0.1:5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgis/postgis:12-3.0
     - docker ps -a
     - lccs_db db init
     - lccs_db db create-namespaces
