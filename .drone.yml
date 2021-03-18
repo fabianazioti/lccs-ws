@@ -30,22 +30,15 @@ steps:
 
 - name: docker-registry
   image: plugins/docker
-  network_mode: bridge
   settings:
-    repo: registry.dpi.inpe.br/brazildatacube/lccs-ws
-    registry: registry.dpi.inpe.br
-    insecure: true
+    auto_tag: true
     username:
       from_secret: registry_user
     password:
       from_secret: registry_pass
-    tags:
-      - latest
-      - ${DRONE_SEMVER}
-    dockerfile: deploy/Dockerfile
-  when:
-    event:
-      - tag
+    registry: registry.dpi.inpe.br
+    repo: registry.dpi.inpe.br/${DRONE_REPO}
+    custom_dns: 150.163.2.4
 
 
 - name: discord-notify
